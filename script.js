@@ -5,45 +5,62 @@ function getComputerChoice() {
   return moves[idx];
 }
 
-function getHumanChoice() {
-  while (true) {
-    let humanChoice = prompt("Rock, paper, scissors, shoot!");
-    if (humanChoice === null || !moves.includes(humanChoice.toLowerCase())) {
-      alert("Please choose a valid move among rock, paper, and scissors");
-    } else {
-      return humanChoice.toLowerCase();
-    }
-  }
-}
-
-function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
-
-  let playRound = (humanChoice, computerChoice) => {
+function playRound(humanChoice, computerChoice) {
+  if (humanScore < 5 && computerScore < 5) {
     const humanIdx = moves.indexOf(humanChoice);
     const computerIdx = moves.indexOf(computerChoice);
     const result = (humanIdx - computerIdx + moves.length) % moves.length;
     if (result === 0) {
-      console.log(`It is a tie! Both players drew ${humanChoice}`);
+      body.style.backgroundColor = "lightgray";
+      roundDiv.textContent = `It is a tie! Both players drew ${humanChoice}`;
     } else if (result === 1) {
-      console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+      body.style.backgroundColor = "lightgreen";
+      roundDiv.textContent = `You win: ${humanChoice} beats ${computerChoice}!`;
       humanScore++;
+      humanScoreDiv.textContent = humanScore;
     } else {
-      console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+      body.style.backgroundColor = "lightcoral";
+      roundDiv.textContent = `You lose: ${humanChoice} loses to ${computerChoice}...`;
       computerScore++;
+      computerScoreDiv.textContent = computerScore;
     }
-  };
 
-  while (humanScore !== 5 && computerScore !== 5) {
-    playRound(getHumanChoice(), getComputerChoice());
-  }
-
-  if (humanScore > computerScore) {
-    console.log(`You beat the computer ${humanScore}:${computerScore}`);
-  } else {
-    console.log(`You lost to the computer ${humanScore}:${computerScore}`);
+    if (humanScore === 5 || computerScore === 5) {
+      let gameOverMessage = humanScore === 5 ? "You won! " : "You lost...";
+      gameOverMessage += "Refresh to run it back?";
+      gameDiv.textContent = gameOverMessage;
+      container.appendChild(gameDiv);
+    }
   }
 }
 
-playGame();
+const humanScoreDiv = document.querySelector("#player");
+const computerScoreDiv = document.querySelector("#computer");
+
+let humanScore = parseInt(humanScoreDiv.textContent);
+let computerScore = parseInt(computerScoreDiv.textContent);
+
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+
+rockBtn.addEventListener("click", function () {
+  playRound("rock", getComputerChoice());
+});
+
+paperBtn.addEventListener("click", function () {
+  playRound("paper", getComputerChoice());
+});
+
+scissorsBtn.addEventListener("click", function () {
+  playRound("scissors", getComputerChoice());
+});
+
+const body = document.querySelector("body");
+
+const container = document.querySelector(".content");
+const roundDiv = document.createElement("div");
+roundDiv.textContent = "Let's play to 5!";
+container.appendChild(roundDiv);
+
+const gameDiv = document.createElement("div");

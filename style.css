@@ -1,0 +1,49 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 96px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  flex: 1;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.scoreboard {
+  margin-bottom: 36px;
+  display: flex;
+  gap: 160px;
+}
+
+.score {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+#rock {
+  margin-right: 12px;
+}
