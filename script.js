@@ -1,5 +1,19 @@
 const moves = ["rock", "paper", "scissors"];
 
+const humanScoreDiv = document.querySelector("#player");
+const computerScoreDiv = document.querySelector("#computer");
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+const body = document.querySelector("body");
+const container = document.querySelector(".content");
+
+const roundDiv = document.createElement("div");
+const gameDiv = document.createElement("div");
+
+let humanScore = parseInt(humanScoreDiv.textContent);
+let computerScore = parseInt(computerScoreDiv.textContent);
+
 function getComputerChoice() {
   const idx = Math.floor(Math.random() * moves.length);
   return moves[idx];
@@ -10,6 +24,7 @@ function playRound(humanChoice, computerChoice) {
     const humanIdx = moves.indexOf(humanChoice);
     const computerIdx = moves.indexOf(computerChoice);
     const result = (humanIdx - computerIdx + moves.length) % moves.length;
+
     if (result === 0) {
       body.style.backgroundColor = "lightgray";
       roundDiv.textContent = `It is a tie! Both players drew ${humanChoice}`;
@@ -34,33 +49,17 @@ function playRound(humanChoice, computerChoice) {
   }
 }
 
-const humanScoreDiv = document.querySelector("#player");
-const computerScoreDiv = document.querySelector("#computer");
-
-let humanScore = parseInt(humanScoreDiv.textContent);
-let computerScore = parseInt(computerScoreDiv.textContent);
-
-const rockBtn = document.querySelector("#rock");
-const paperBtn = document.querySelector("#paper");
-const scissorsBtn = document.querySelector("#scissors");
-
-rockBtn.addEventListener("click", function () {
+rockBtn.addEventListener("click", () => {
   playRound("rock", getComputerChoice());
 });
 
-paperBtn.addEventListener("click", function () {
+paperBtn.addEventListener("click", () => {
   playRound("paper", getComputerChoice());
 });
 
-scissorsBtn.addEventListener("click", function () {
+scissorsBtn.addEventListener("click", () => {
   playRound("scissors", getComputerChoice());
 });
 
-const body = document.querySelector("body");
-
-const container = document.querySelector(".content");
-const roundDiv = document.createElement("div");
 roundDiv.textContent = "Let's play to 5!";
 container.appendChild(roundDiv);
-
-const gameDiv = document.createElement("div");
